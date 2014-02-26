@@ -1,4 +1,4 @@
-var SourceCon   = require("sourcecon"),
+var SourceCon   = require("./sourcecon"),
     events      = require("events"),
     moment      = require("moment");
 
