@@ -40,7 +40,7 @@ app.configure(function(){
     app.use(express.urlencoded());
     app.use(express.methodOverride());
     app.use(express.cookieParser());
-    app.use(express.session({secret: '123'}));
+    app.use(express.session({secret: 'liStijWoDoccequip', cookie: { maxAge: 31557600 }}));
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(function(req, res, next) {
@@ -77,18 +77,12 @@ passport.deserializeUser(function(user, done) {
     done(null, user);
 });
 
-
-// development only     
-// if ('development' == app.get('env')) {
-    // app.use(express.errorHandler());
-// }
-
 function IsAuthenticated(req,res,next){
-    // if(req.isAuthenticated()){
+    if(req.isAuthenticated()){
         next();
-    // }else{
-        // res.redirect('/login');
-    // }
+    }else{
+        res.redirect('/login');
+    }
 }
 
 app.get('/', IsAuthenticated, routing.dashboard);
