@@ -1,0 +1,33 @@
+{
+  "name": "sourcecon",
+  "version": "0.2.0",
+  "description": "Simple SRCDS RCON for node.js",
+  "author": {
+    "name": "Daniel Wirtz",
+    "email": "dcode@dcode.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dcodeIO/SourceCon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dcodeIO/SourceCon/issues"
+  },
+  "main": "./index.js",
+  "bin": {
+    "sourcecon": "./bin/sourcecon"
+  },
+  "dependencies": {
+    "keypress": "~0.2",
+    "colour": "~0.7"
+  },
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=0.8"
+  },
+  "readme": "SourceCon - Simple SRCDS RCON for node.js\r\n=========================================\r\n\r\nFeatures\r\n--------\r\n* Executes arbitrary RCON commands\r\n* Properly handles multi-part responses\r\n* Emits push messages / server log, like sent by Rust\r\n* Includes a command line RCON console\r\n\r\nUsage\r\n-----\r\n`npm install sourcecon`\r\n\r\n```js\r\nvar SourceCon = require(\"sourcecon\");\r\nvar con = new SourceCon(\"127.0.0.1\", 25080);\r\ncon.connect(function(err) {\r\n    if (err) {\r\n        throw(err);\r\n    }\r\n    con.auth(\"rconpass\", function(err) {\r\n        if (err) {\r\n            throw(err);\r\n        }\r\n        con.send(\"status\", function(err, res) {\r\n            if (err) {\r\n                throw(err);\r\n            }\r\n            console.log(\"STATUS: \"+res);\r\n        });\r\n        ...\r\n    });\r\n});\r\n```\r\n\r\nCommand line\r\n------------\r\n* `npm install -g sourcecon`\r\n* Run `sourcecon` on the command line to start the RCON console\r\n\r\nLicense: Apache License, Version 2.0\r\n",
+  "readmeFilename": "README.md",
+  "homepage": "https://github.com/dcodeIO/SourceCon",
+  "_id": "sourcecon@0.2.0",
+  "_from": "sourcecon@"
+}

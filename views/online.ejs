@@ -1,0 +1,16 @@
+<% for(var i=0; i<server.online.length; i++) { %>
+    <tr>
+        <td><%= i+1 %></td>
+        <td><%= server.online[i].steamid %></td>
+        <td><%= server.online[i].name %></td>
+        <td><%= server.online[i].ip %></td>
+        <td><%= server.online[i].ping %></td>
+        <td><%= server.online[i].played %></td>
+        <td>
+            <button type="button" class="btn btn-primary ajaxRequest" data-type="kick" data-name="<%= server.online[i].name %>">Kick</button>
+            <a href="#banModal" class="btn btn-danger modalSpawn" data-name="<%= server.online[i].name %>">Ban</a>
+            <a href="#giveModal" class="btn btn-info modalSpawn" data-name="<%= server.online[i].name %>">Give</a>
+            <a href="#teleportModal" class="btn btn-default modalSpawn" data-name="<%= server.online[i].name %>">Tele</a>
+        </td>
+    </tr>
+<% } %>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>RustyAdmin Tool</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+
+<link href="stylesheets/bootstrap.css" rel="stylesheet">
+<link rel="stylesheet" href="stylesheets/font-awesome.css"> 
+<link rel="stylesheet" href="stylesheets/jquery-ui.css"> 
+<link rel="stylesheet" href="stylesheets/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="stylesheets/jquery.gritter.css">
+<link rel="stylesheet" href="stylesheets/bootstrap-switch.css">
+<link href="stylesheets/style.css" rel="stylesheet">
+<link href="stylesheets/widgets.css" rel="stylesheet">   
+
+<!-- HTML5 Support for IE -->
+<!--[if lt IE 9]>
+<script src="javascripts/html5shim.js"></script>
+<![endif]-->
+
+<link rel="shortcut icon" href="images/favicon/favicon.png">
+</head>
+
+<body>
+
+  <div class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
+    <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      </button>
+      <a href="/" class="navbar-brand">RustAdmin <span class="bold">Tool</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="sidebar">
+    <div class="sidebar-dropdown"><a href="#">Navigation</a></div>
+    <div class="sidebar-inner">
+      <ul class="navi">
+
+        <li class="nred <% if (title == 'Dashboard') {%>current<% } %>"><a href="/"><i class="icon-desktop"></i> Dashboard</a></li>
+        <li class="ngreen <% if (title == 'Players') {%>current<% } %>"><a href="/players"><i class="icon-bar-chart"></i> Players</a></li>
+        <li class="norange <% if (title == 'Settings') {%>current<% } %>"><a href="/settings"><i class="icon-bar-chart"></i> Settings</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mainbar">
+    <div class="page-head">
+      <h2 class="pull-left"><%= title %> 
+        <span class="page-meta"><%= description %></span>
+      </h2>
+
+      <% if (breadcrumbs) {%>
+        <div class="bread-crumb pull-right">
+          <a href="/"><i class="icon-home"></i> Home</a> 
+          <% for(var i=0; i<breadcrumbs.length; i++) { %>
+            <span class="divider">/</span> 
+            <a href="<%= breadcrumbs[i][0] %>" class="bread-current"><%= breadcrumbs[i][1] %></a>
+          <% } %> 
+        </div>
+      <% } %>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="matter">
+      <div class="container">
+        <%- body %>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+
+  <span class="totop"><a href="#"><i class="icon-chevron-up"></i></a></span> 
+
+  <script src="/socket.io/socket.io.js"></script> <!-- Socket.IO -->
+  <script src="javascripts/jquery.js"></script> <!-- jQuery -->
+  <script src="javascripts/bootstrap.js"></script> <!-- Bootstrap -->
+  <script src="javascripts/jquery-ui-1.10.2.custom.min.js"></script> <!-- jQuery UI -->
+  <script src="javascripts/jquery.gritter.min.js"></script>
+  <script src="javascripts/bootstrap-datetimepicker.min.js"></script> <!-- Date picker -->
+  <script src="javascripts/bootstrap-switch.min.js"></script> <!-- Bootstrap Toggle -->
+  <script src="javascripts/custom.js"></script> <!-- Custom codes -->
+
+  <script>
+    var socket = io.connect('http://localhost');
+
+    socket.on('updateChat', function(message) {
+      $('#chat').append($('<li>' + message.time + ' [' + message.name + ']: ' + message.message + '</li>'));
+      $(".error-log").animate({ scrollTop: $('.error-log')[0].scrollHeight}, 100);
+    });
+
+    socket.on('updateOnline', function(online) {
+      $.post('/online', function(result) {
+        $('#onlineList').html(result);
+      });
+      $.get('/status', function(result) {
+        $('#server_status').html(result);
+      });
+    });
+
+    socket.on("updateInventory", function(message) {
+      createNofitication("Inventory update", message);
+    });
+
+    socket.on("connectionProblem", function() {
+      createNofitication("Connection problem", "Wrong server data for connection");
+    });
+  </script>  
+
+</body>
+</html>

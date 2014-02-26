@@ -1,0 +1,19 @@
+{
+  "name": "RustAdminTool(RAT)",
+  "version": "0.1b",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.4.8",
+    "ejs": "*",
+    "less-middleware": "*",
+    "express-partials": "~0.2.0",
+    "socket.io": "~0.9.16",
+    "moment": "~2.5.1",
+    "express-domain-middleware": "~0.1.0",
+    "passport": "~0.2.0",
+    "passport-local": "~0.1.6"
+  }
+}

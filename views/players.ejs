@@ -1,0 +1,183 @@
+<div class="widget wviolet">
+    <div class="widget-head">
+        <div class="pull-left">List of players</div>
+        <div class="widget-icons pull-right">
+            <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
+            <a href="#" class="wclose"><i class="icon-remove"></i></a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+  <div class="widget-content">
+    <table class="table table-bordered ">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>STEAMID</th>
+                <th>Nickname</th>
+                <th>IP</th>
+                <th>Ping</th>
+                <th>Time</th>
+                <th>Control</th>
+            </tr>
+        </thead>
+        <tbody id='onlineList'>
+            <%- partial('online', {server: server}) %>
+        </tbody>
+    </table>
+</div>
+
+<input type="hidden" name="player_name" id="player_name">
+
+<div id="teleportModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Teleport player</h4>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="player" value="">
+                <p>Player: <span class="player_name" style="font-weight: bold;"></span></p>
+                <hr>
+                <p>
+                    Location: <br>
+                    <div class="col-lg-2">
+                        <input type="text" size="3" class="form-control" placeholder="X" id="teleport_x">
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="text" size="3" class="form-control" placeholder="Y" id="teleport_y">
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="text" size="3" class="form-control" placeholder="Z" id="teleport_z">
+                    </div>
+                    <div class="col-lg-2">
+                        <button type="button" class="btn btn-primary modalSubmit" data-type="topos">Teleport</button>
+                    </div>
+                    <div class="clearfix"></div>
+                </p>
+                <hr>
+                <p>
+                    Another Player:<br>
+                    <div class="col-lg-6">
+                        <select id="teleport_player" class="form-control">
+                            <option value="" disabled="true" selected="true"></option>
+                            <% for(var i=0; i<server.online.length; i++) { %>
+                                <option value="<%= server.online[i].name%>"><%= server.online[i].name %></option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="col-lg-2">
+                        <button type="button" class="btn btn-primary modalSubmit" data-type="toplayer">Teleport</button>
+                    </div>
+                    <div class="clearfix"></div>
+                </p>
+            </div> 
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="banModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Ban player</h4>
+            </div>
+            <div class="modal-body">
+                <p>Player: <span class="player_name" style="font-weight: bold;"></span></p>
+                <p>Reason: <input type="text" name="reason" class="form-control" id="ban_reason"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <button type="button" class="btn btn-primary modalSubmit" data-type="ban">Ban player</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="giveModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Give item to player</h4>
+            </div>
+            <div class="modal-body">
+                <p>Player: <span class="player_name" style="font-weight: bold;"></span></p>
+                <p>Item: <select name="item" class="form-control" id="give_item">
+                    <option value="none"></option>
+                    <% for(var i=0; i<server.items.length; i++) { %>
+                        <option value="<%=server.items[i] %>"><%=server.items[i]%></option>
+                    <% } %>
+                </select></p>
+                <p>Quantity: <input type="text" size="2" name="quantity" class="form-control" id="give_quantity"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <button type="button" class="btn btn-primary modalSubmit" data-type="give">Give item</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="widget wviolet">
+    <div class="widget-head">
+        <div class="pull-left">Commands</div>
+        <div class="widget-icons pull-right">
+            <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
+            <a href="#" class="wclose"><i class="icon-remove"></i></a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+  <div class="widget-content">
+    <table class="table table-stiped">
+        <tr>
+            <td>
+                <form method="POST" onsubmit="javascript: return false;" class="form-inline" role="form">
+                    <div class="col-lg-3">
+                        <input type="text" name="steamid" class="form-control" placeholder="STEAMID" id="banid_steamid">
+                    </div>
+                    <div class="col-lg-3">
+                        <input type="text" name="reason" class="form-control" placeholder="Reason" id="banid_reason">
+                    </div>
+                    <button type="button" class="btn btn-primary ajaxRequest" data-type="banid">Ban SteamID</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form method="POST" onsubmit="javascript: return false;" class="form-inline" role="form">
+                    <div class="col-lg-6">
+                        <input type="text" name="command" class="form-control" id="send_command">
+                    </div>
+                    <button type="button" class="btn btn-primary ajaxRequest" data-type="send">Send Command</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form method="POST" onsubmit="javascript: return false;" class="form-inline" role="form" id="give_all">
+                    <div class="col-lg-4">
+                        <select name="item" class="form-control" id="giveall_item">
+                            <option value="none"></option>
+                            <% for(var i=0; i<server.items.length; i++) { %>
+                                <option value="<%=server.items[i] %>"><%=server.items[i]%></option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="col-lg-1">
+                        <input type="text" size="2" name="quantity" class="form-control" id="giveall_quantity">
+                    </div>
+                    <button type="button" class="btn btn-primary ajaxRequest" data-type="giveall">Give All</button>
+                </form>                
+            </td>
+        </tr>
+    </table>
+</div>
+

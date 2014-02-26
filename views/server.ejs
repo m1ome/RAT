@@ -1,0 +1,23 @@
+<tbody>
+    <tr>
+        <td>Connection status</td>
+        <td><% if (server.status) { %><span class="label label-success">Online</span> <% } else { %><span class="label label-important">Offline</span> <% } %></td>
+    </tr>
+    <tr>
+        <td>Hostname</td>
+        <td><%= server.hostname %></td>
+    </tr>
+    <tr>
+        <td>Players online</td>
+        <td><%= server.currentOnline %>/<%= server.maxOnline %></td>
+    </tr>
+    <tr>
+        <td colspan=2>
+            <% if (server.status) {%>
+                <button type="button" class="btn btn-danger" id="disconnect">Disconnect</button>
+            <% } else { %>
+                <button type="button" class="btn btn-success" id="connect">Connect</button>
+            <% } %>
+        </td>
+    </tr>
+</tbody>

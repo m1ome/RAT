@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <title>RustAdminTool Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="">
+  <link href="stylesheets/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" href="stylesheets/font-awesome.css">
+  <link href="stylesheets/style.css" rel="stylesheet">
+  
+  
+  <!-- HTML5 Support for IE -->
+  <!--[if lt IE 9]>
+  <script src="javascripts/html5shim.js"></script>
+  <![endif]-->
+
+  <link rel="shortcut icon" href="images/favicon/favicon.png">
+</head>
+
+<body>
+
+<div class="admin-form">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+            <div class="widget worange">
+              <div class="widget-head">
+                <i class="icon-lock"></i> Login 
+              </div>
+
+              <div class="widget-content">
+                <div class="padd">
+                  <form class="form-horizontal" method="POST">
+                    <div class="form-group">
+                      <label class="control-label col-lg-3" for="inputEmail">Username</label>
+                      <div class="col-lg-9">
+                        <input type="text" class="form-control" id="inputEmail" placeholder="Username" name="username">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-lg-3" for="inputPassword">Password</label>
+                      <div class="col-lg-9">
+                        <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                    <div class="col-lg-9 col-lg-offset-3">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox"> Remember me
+                        </label>
+                        </div>
+                    </div>
+                    </div>
+                        <div class="col-lg-9 col-lg-offset-3">
+                            <button type="submit" class="btn btn-danger">Sign in</button>
+                            <button type="reset" class="btn btn-default">Reset</button>
+                        </div>
+                    <br />
+                  </form>
+                  
+                </div>
+                </div>
+            </div>  
+      </div>
+    </div>
+  </div> 
+</div>
+    
+        
+
+<!-- JS -->
+<script src="javascripts/jquery.js"></script>
+<script src="javascripts/bootstrap.js"></script>
+</body>
+</html>

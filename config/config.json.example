@@ -1,0 +1,9 @@
+{
+    "host":"127.0.0.1",
+    "port":"28016",
+    "pass":"YourSecretPassword",
+    "auth" : {
+        "username" : "admin",
+        "pass"     : "password"
+    }
+}
