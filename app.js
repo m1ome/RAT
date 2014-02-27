@@ -27,7 +27,7 @@ try {
     console.log(err);
 }
 
-rconConnection = new RCon(config.host, config.port, config.pass);
+rconConnection = new RCon(config.host, config.port, config.pass, config.debug);
 
 app.configure(function(){
     app.set('port', process.env.PORT || 3000);
@@ -78,7 +78,7 @@ passport.deserializeUser(function(user, done) {
 });
 
 function IsAuthenticated(req,res,next){
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated() || config.nologin){
         next();
     }else{
         res.redirect('/login');

@@ -2,12 +2,15 @@ var SourceCon   = require("./sourcecon"),
     events      = require("events"),
     moment      = require("moment");
 
-var RCon = function(host, port, password) {
+var RCon = function(host, port, password, debug) {
     this.host       = host;
     this.port       = port;
     this.password   = password;
+    this.debug      = debug;
 
-    this.connection    = new SourceCon(this.host, this.port);
+    this.connection       = new SourceCon(this.host, this.port);
+    this.connection.debug = this.debug;
+
     this.status        = false;
     this.console       = [];
     this.chat          = [];
@@ -151,7 +154,7 @@ RCon.prototype.connect = function (callback) {
                         steamid: player[1],
                         name: player[2],
                         ping: player[3],
-                        played: player[4],
+                        played: moment.duration({seconds: player[4]}).humanize(),
                         ip: player[5]
                     });
                 }
@@ -173,8 +176,6 @@ RCon.prototype.connect = function (callback) {
             rcon.send('status');
         });
     });
-
-
 }
 
 RCon.prototype.chatMessage = function(message) {
