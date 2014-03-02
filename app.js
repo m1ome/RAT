@@ -99,6 +99,11 @@ async.waterfall([
             });
             app.use(app.router);
             app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
+            app.use(function(req, res) {
+                res.render('404', {
+                    layout: false,
+                });
+            });
         });       
 
         // Passport bindings
@@ -107,7 +112,7 @@ async.waterfall([
                 usernameField: 'username',
                 passwordField: 'password'
             }, function(username, password, done) {
-                databaseConnection.query("SELECT `id`,`password`,`username` FROM `admin` WHERE `username`=?", [username]).on('result', function(row) {
+                databaseConnection.query("SELECT `id`,`password`,`username` FROM `admins` WHERE `username`=?", [username]).on('result', function(row) {
                     if (row.password == password) {
                         return done(null, row.id);
                     } else {
@@ -260,10 +265,3 @@ async.waterfall([
         console.log('Started server on 127.0.0.1:3000');
     }
 ]);
-
-
-// rconConnection = new RCon(config.host, config.port, config.pass, config.debug);
-
-
-
-
