@@ -22,7 +22,7 @@ exports.settings = function(req, res) {
         title: 'Settings',
         description: 'RustAdmin Settings',
         breadcrumbs: [['/settings', 'Settings']],
-        settings: config,
+        settings: applicationConfig,
     });
 }
 

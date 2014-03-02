@@ -11,13 +11,15 @@
         <td>Players online</td>
         <td><%= server.currentOnline %>/<%= server.maxOnline %></td>
     </tr>
-    <tr>
-        <td colspan=2>
-            <% if (server.status) {%>
-                <button type="button" class="btn btn-danger" id="disconnect">Disconnect</button>
-            <% } else { %>
-                <button type="button" class="btn btn-success" id="connect">Connect</button>
-            <% } %>
-        </td>
-    </tr>
+    <% if (roleCheck('connect')) { %>
+        <tr>
+            <td colspan=2>
+                <% if (server.status) {%>
+                    <button type="button" class="btn btn-danger" id="disconnect">Disconnect</button>
+                <% } else { %>
+                    <button type="button" class="btn btn-success" id="connect">Connect</button>
+                <% } %>
+            </td>
+        </tr>
+    <% } %>
 </tbody>

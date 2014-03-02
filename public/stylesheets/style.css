@@ -516,6 +516,8 @@ form label{
 }
 
 .navbar .navbar-brand{
+    background: url('/images/logo.png') left -5px no-repeat !important;
+    padding-left: 65px;
 	color: #fff !important;
 }
 

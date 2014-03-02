@@ -12,7 +12,7 @@
             <div class="form-group">
                 <label class="col-lg-4 control-label">Host</label>
                 <div class="col-lg-8">
-                    <input type="text" class="form-control" name="host" value="<%= settings.host %>" readonly="true">
+                    <input type="text" class="form-control" name="host" value="<%= settings['rust.host'] %>" readonly="true">
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -20,10 +20,38 @@
             <div class="form-group">
                 <label class="col-lg-4 control-label">Port</label>
                 <div class="col-lg-8">
-                    <input type="text" class="form-control" name="port" value="<%= settings.port %>" readonly="true">
+                    <input type="text" class="form-control" name="port" value="<%= settings['rust.port'] %>" readonly="true">
                 </div>
                 <div class="clearfix"></div>
             </div>
+
+            <div class="form-group">
+                <label class="col-lg-4 control-label">Password</label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" name="port" value="<%= settings['rust.password'] %>" readonly="true">
+                </div>
+                <div class="clearfix"></div>
+            </div>            
+
+
+            <h6>Application settings</h6>
+            <hr>
+
+            <div class="form-group">
+                <label class="col-lg-4 control-label">Debug</label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" name="host" value="<%= settings['config.debug'] %>" readonly="true">
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-4 control-label">Disable login</label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" name="host" value="<%= settings['config.nologin'] %>" readonly="true">
+                </div>
+                <div class="clearfix"></div>
+            </div>            
 
             <div class="clearfix"></div>
         </div>

@@ -34,21 +34,23 @@
                 </ul>
             </div>
         </div>
-        <form class="form-horizontal" role="form" method="POST" onsubmit="javascript: return false;">
-            <div class="form-group">
-                <label class="col-lg-4 control-label">Say</label>
-                <div class="col-lg-6">
-                    <input type="text" class="form-control" placeholder="Message" name="message">
+        <% if (roleCheck('chat')) { %>
+            <form class="form-horizontal" role="form" method="POST" onsubmit="javascript: return false;">
+                <div class="form-group">
+                    <label class="col-lg-4 control-label">Say</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" placeholder="Message" name="message">
+                    </div>
+                    <div class="col-lg-1">
+                        <select class="form-control" name="popup">
+                            <option value='0'>Notice</option>
+                            <option value='1'>Popup</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-info" id="send_chat">Send</button>
                 </div>
-                <div class="col-lg-1">
-                    <select class="form-control" name="popup">
-                        <option value='0'>Notice</option>
-                        <option value='1'>Popup</option>
-                    </select>
-                </div>
-                <button type="button" class="btn btn-info" id="send_chat">Send</button>
-            </div>
-        </form>        
+            </form>       
+        <% } %> 
     </div>
 </div>
 

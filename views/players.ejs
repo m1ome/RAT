@@ -125,59 +125,67 @@
     </div>
 </div>
 
-<div class="widget wviolet">
-    <div class="widget-head">
-        <div class="pull-left">Commands</div>
-        <div class="widget-icons pull-right">
-            <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
-            <a href="#" class="wclose"><i class="icon-remove"></i></a>
+<% if (roleCheck('ban') || roleCheck('execute') || roleCheck('giveall')) { %>
+    <div class="widget wviolet">
+        <div class="widget-head">
+            <div class="pull-left">Commands</div>
+            <div class="widget-icons pull-right">
+                <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
+                <a href="#" class="wclose"><i class="icon-remove"></i></a>
+            </div>
+            <div class="clearfix"></div>
         </div>
-        <div class="clearfix"></div>
-    </div>
 
-  <div class="widget-content">
-    <table class="table table-stiped">
-        <tr>
-            <td>
-                <form method="POST" onsubmit="javascript: return false;" class="form-inline" role="form">
-                    <div class="col-lg-3">
-                        <input type="text" name="steamid" class="form-control" placeholder="STEAMID" id="banid_steamid">
-                    </div>
-                    <div class="col-lg-3">
-                        <input type="text" name="reason" class="form-control" placeholder="Reason" id="banid_reason">
-                    </div>
-                    <button type="button" class="btn btn-primary ajaxRequest" data-type="banid">Ban SteamID</button>
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form method="POST" onsubmit="javascript: return false;" class="form-inline" role="form">
-                    <div class="col-lg-6">
-                        <input type="text" name="command" class="form-control" id="send_command">
-                    </div>
-                    <button type="button" class="btn btn-primary ajaxRequest" data-type="send">Send Command</button>
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form method="POST" onsubmit="javascript: return false;" class="form-inline" role="form" id="give_all">
-                    <div class="col-lg-4">
-                        <select name="item" class="form-control" id="giveall_item">
-                            <option value="none"></option>
-                            <% for(var i=0; i<server.items.length; i++) { %>
-                                <option value="<%=server.items[i] %>"><%=server.items[i]%></option>
-                            <% } %>
-                        </select>
-                    </div>
-                    <div class="col-lg-1">
-                        <input type="text" size="2" name="quantity" class="form-control" id="giveall_quantity">
-                    </div>
-                    <button type="button" class="btn btn-primary ajaxRequest" data-type="giveall">Give All</button>
-                </form>                
-            </td>
-        </tr>
-    </table>
-</div>
+      <div class="widget-content">
+        <table class="table table-stiped">
+            <% if (roleCheck('ban')) { %>
+                <tr>
+                    <td>
+                        <form method="POST" onsubmit="javascript: return false;" class="form-inline" role="form">
+                            <div class="col-lg-3">
+                                <input type="text" name="steamid" class="form-control" placeholder="STEAMID" id="banid_steamid">
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text" name="reason" class="form-control" placeholder="Reason" id="banid_reason">
+                            </div>
+                            <button type="button" class="btn btn-primary ajaxRequest" data-type="banid">Ban SteamID</button>
+                        </form>
+                    </td>
+                </tr>
+            <% } %>
+            <% if (roleCheck('execute')) { %>
+                <tr>
+                    <td>
+                        <form method="POST" onsubmit="javascript: return false;" class="form-inline" role="form">
+                            <div class="col-lg-6">
+                                <input type="text" name="command" class="form-control" id="send_command">
+                            </div>
+                            <button type="button" class="btn btn-primary ajaxRequest" data-type="send">Send Command</button>
+                        </form>
+                    </td>
+                </tr>
+            <% } %>
+            <% if (roleCheck('giveall')) { %>
+                <tr>
+                    <td>
+                        <form method="POST" onsubmit="javascript: return false;" class="form-inline" role="form" id="give_all">
+                            <div class="col-lg-4">
+                                <select name="item" class="form-control" id="giveall_item">
+                                    <option value="none"></option>
+                                    <% for(var i=0; i<server.items.length; i++) { %>
+                                        <option value="<%=server.items[i] %>"><%=server.items[i]%></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <div class="col-lg-1">
+                                <input type="text" size="2" name="quantity" class="form-control" id="giveall_quantity">
+                            </div>
+                            <button type="button" class="btn btn-primary ajaxRequest" data-type="giveall">Give All</button>
+                        </form>                
+                    </td>
+                </tr>
+            <% } %>
+        </table>
+    </div>
+<% } %>
 

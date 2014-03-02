@@ -139,6 +139,23 @@ $(document).on("click", ".ajaxRequest", function(e) {
   }
 });
 
+$(document).on("click", ".formGenerate", function(e) {
+  e.preventDefault();
+  var _self = $(this);
+  var page    = _self.data('page');
+  var confirm = _self.data('confirm');
+  var params  = _self.data('params');
+
+  submitRequest(page, params, confirm, function(result) {
+    console.log(result);
+    if (result.error.length > 0) {
+      alert(result.error);
+    } else {
+      location.reload();
+    }
+  });
+})
+
 $(document).on("click", "#connect", function(e) {
   e.preventDefault();
   $.get('/connect', function(result) {
