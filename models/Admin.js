@@ -55,7 +55,7 @@ var saveRoles = function(id, roles, callback) {
 }
 
 module.exports = {
-    roles: ['connect', 'ban', 'kick', 'teleport', 'give', 'giveall', 'execute', 'settings', 'admins'],
+    roles: ['connect', 'restart', 'ban', 'kick', 'teleport', 'give', 'giveall', 'execute', 'settings', 'admins'],
     create: create,
     update: update,
     del: del,

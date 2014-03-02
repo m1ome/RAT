@@ -72,6 +72,22 @@
                     </div>
                     <div class="clearfix"></div>
                 </p>
+                <hr>
+                <p>
+                    Preset:<br>
+                    <div class="col-lg-6">
+                        <select id="teleport_preset" class="form-control">
+                            <option value="" disabled="true" selected="true"></option>
+                            <% for(var i=0; i<teleportsPreset.length; i++) { %>
+                                <option value="<%= teleportsPreset[i].id%>"><%= teleportsPreset[i].name %></option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="col-lg-2">
+                        <button type="button" class="btn btn-primary modalSubmit" data-type="topreset">Teleport</button>
+                    </div>
+                    <div class="clearfix"></div>
+                </p>
             </div> 
 
             <div class="modal-footer">

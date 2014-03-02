@@ -1,7 +1,7 @@
 /* JS */
 
 function scrollToBottom() {
-  if (typeof $(".error-log") != 'undefined') {
+  if ($(".error-log").length > 0) {
     $(".error-log").animate({ scrollTop: $('.error-log')[0].scrollHeight}, 100);
   }
 }
@@ -94,6 +94,13 @@ $(document).on("click", ".modalSubmit", function(e) {
     }, function() {
       modal.modal('hide');
     });        
+  }else if(_self.data('type') == 'topreset') {
+    submitRequest('/topreset', {
+      player: playerName,
+      preset: $('#teleport_preset').val()
+    }, function() {
+      modal.modal('hide');
+    });
   }
 
   // modal.find('input').val();
@@ -154,7 +161,17 @@ $(document).on("click", ".formGenerate", function(e) {
       location.reload();
     }
   });
-})
+});
+
+$(document).on("click", "#restart", function(e) {
+  e.preventDefault();
+
+  if (confirm('You really wanna restart server?')) {
+    $.get('/restart', function(result) {
+      alert('Server is restarting now!');
+    });
+  }
+});
 
 $(document).on("click", "#connect", function(e) {
   e.preventDefault();
@@ -184,27 +201,6 @@ $(document).ready(function(){
     }
     else{
       $(".sidebar .sidebar-inner").slideUp(350); 
-    }
-  });
-
-});
-
-$(document).ready(function(){
-
-  $(".has_submenu > a").click(function(e){
-    e.preventDefault();
-    var menu_li = $(this).parent("li");
-    var menu_ul = $(this).next("ul");
-
-    if(menu_li.hasClass("open")){
-      menu_ul.slideUp(350);
-      menu_li.removeClass("open")
-    }
-    else{
-      $(".navi > li > ul").slideUp(350);
-      $(".navi > li").removeClass("open");
-      menu_ul.slideDown(350);
-      menu_li.addClass("open");
     }
   });
 
@@ -304,6 +300,27 @@ $('.slide-box-head').click(function() {
     }
 }); 
 
+$(document).ready(function(){
+  console.log('done loading');
+  $(".has_submenu > a").click(function(e){
+    console.log('submenu');
+    e.preventDefault();
+    var menu_li = $(this).parent("li");
+    var menu_ul = $(this).next("ul");
+
+    if(menu_li.hasClass("open")){
+      menu_ul.slideUp(350);
+      menu_li.removeClass("open")
+    }
+    else{
+      $(".navi > li > ul").slideUp(350);
+      $(".navi > li").removeClass("open");
+      menu_ul.slideDown(350);
+      menu_li.addClass("open");
+    }
+  });
+
+});
 
 $('.sclose').click(function(e){
   e.preventDefault();
@@ -345,6 +362,20 @@ $('#send_chat').click(function() {
       form.find('input[type=text]').val('');
       scrollToBottom();
     }
+  });
+});
+
+/* Send execute command from dashboard */
+$('#send_execute').closest('form').submit(function(event){
+  $('#send_execute').trigger('click');
+  event.preventDefault();
+});
+
+$('#send_execute').click(function() {
+  var form = $(this).closest('form');
+  submitRequest('/execute', form.serialize(),  function() {
+    form.find('input').val('');
+    scrollToBottom();
   });
 });
   

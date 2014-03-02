@@ -1,7 +1,7 @@
 <% for(var i=0; i<server.online.length; i++) { %>
     <tr>
         <td><%= i+1 %></td>
-        <td><%= server.online[i].steamid %></td>
+        <td><a href="http://steamcommunity.com/profiles/<%= server.online[i].steamid %>" target="_blank"><%= server.online[i].steamid %></a></td>
         <td><%= server.online[i].name %></td>
         <td><%= server.online[i].ip %></td>
         <td><%= server.online[i].ping %></td>

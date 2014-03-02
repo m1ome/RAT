@@ -1,0 +1,63 @@
+<div class="widget wgreen">
+    <div class="widget-head">
+        <div class="pull-left">Teleports presets</div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="widget-content">
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Controls</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(var i=0; i<teleports.length; i++) {%>
+                    <tr>
+                        <td><%= teleports[i].id %></td>
+                        <td><%= teleports[i].name %></td>
+                        <td><%= teleports[i].location %></td>
+                        <td>
+                            <button type="button" class="btn btn-danger formGenerate" data-page="/teleports/del" data-params='{"id":"<%= teleports[i].id%>", "_method":"delete"}' data-confirm="Do yo really wanna delete <%= teleports[i].name %>?">Delete</button>
+                            <a href="/teleports/<%= teleports[i].id %>" class="btn btn-info">Edit</a>
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="widget wblue">
+    <div class="widget-head">
+        <div class="pull-left">Add teleport preset</div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="widget-content">
+        <div class="padd">
+            <form action="/teleports" method="POST" class="form-horizontal" >
+                <div class="form-group">
+                    <label class="col-lg-4 control-label">Name</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" name="name">
+                    </div>
+                </div>                  
+                <div class="form-group">
+                    <label class="col-lg-4 control-label">Location</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" name="location">
+                    </div>
+                </div>                 
+                <hr>
+                <div class="col-lg-offset-1 col-lg-9">
+                    <button type="submit" class="btn btn-success">Add</button>
+                </div>    
+            </form>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>

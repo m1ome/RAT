@@ -17,6 +17,13 @@ exports.disconnect = function(req, res) {
     res.send({error: ''});
 }
 
+exports.restart = function(req, res) {
+    rconConnection.send('quit', function(result) {
+        rconConnection.disconnect();
+        res.send({error: ''});
+    });
+}
+
 exports.settings = function(req, res) {
     res.render('settings', {
         title: 'Settings',
@@ -36,11 +43,16 @@ exports.dashboard = function(req, res) {
 }
 
 exports.players = function(req, res) {
-    res.render('players', {
-        title: 'Players',
-        description: 'Currently playing on server',
-        breadcrumbs: [['/players', 'Players']],
-        server: rconConnection,
+    var teleport = require('./../models/Teleport.js');
+
+    teleport.findAll(function(teleports) {
+        res.render('players', {
+            title: 'Players',
+            description: 'Currently playing on server',
+            breadcrumbs: [['/players', 'Players']],
+            server: rconConnection,
+            teleportsPreset: teleports
+        });
     });
 }
 
@@ -109,6 +121,24 @@ exports.toplayer = function(req, res) {
     rconConnection.toplayer(player1, player2, function() {
         res.send({error: ''});
     });
+}
+
+exports.topreset = function(req, res) {
+    var player   = req.body.player;
+    var preset   = req.body.preset;
+    var teleport = require('./../models/Teleport.js');
+
+    console.log(preset);
+
+    teleport.findOne(preset, function(tele) {
+        var coords = tele.location.split(' ');
+
+        rconConnection.topos(player, coords[0], coords[1], coords[2], function() {
+            res.send({error: ''});
+        });
+    });
+
+    res.send({error: ''});
 }
 
 exports.give = function(req, res) {

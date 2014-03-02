@@ -124,6 +124,18 @@ RCon.prototype.connect = function (callback) {
 
     console.log('RCON: connection to [' + rcon.host + ':' + rcon.port + ']');
     rcon.connection.on("message", function(message) {
+        if (message.type === 4 && message.body.toString().indexOf('hostname:') === -1) {
+            console.log('RCON: pushed new console message');
+
+            var consoleMessage = {
+                time: moment().format("MM-DD-YYYY HH:mm"),
+                log: message.body.toString()
+            };
+
+            rcon.console.push(consoleMessage);
+            rcon.emit("updateConsole", consoleMessage);
+        }
+
         if (message.type === 4 && message.body.toString().indexOf('[CHAT]') != -1) {
             var chatMessageClean = message.body.toString();
             console.log('RCON: new chat message ' + chatMessageClean);
@@ -131,6 +143,9 @@ RCon.prototype.connect = function (callback) {
             rcon.chatMessage(chatMessageClean);
         } else if(message.type === 2 && message.id === -1) {
             rcon.emit("connectionProblem");
+        } else if(message.type === 4 && (message.body.toString().indexOf('User Connected') != -1 || message.body.toString().indexOf('User Disconnected') != -1)) {
+            console.log('User connect/disconnect, updating online list');
+            rcon.send('status');
         } else if(message.type === 4 && message.body.toString().indexOf('Gave') == 0) {
             console.log("RCON: given to inventory something");
             rcon.emit("updateInventory", message.body.toString());

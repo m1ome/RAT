@@ -56,6 +56,16 @@
         <% if (roleCheck('admins') && applicationConfig['config.nologin'] != 'true') { %>
           <li class="nblue <% if (title == 'Admins') {%>current<% } %>"><a href="/admins"><i class="icon-bar-chart"></i> Admins</a></li>
         <% } %>
+        <li class="has_submenu nviolet">
+          <a href="#">
+            <i class="icon-file-alt"></i> Presets
+            <span class="pull-right"><i class="icon-angle-right"></i></span>
+          </a>
+
+          <ul>
+            <li><a href="/teleports">Teleports</a></li>
+          </ul>
+        </li>        
         <% if (applicationConfig['config.nologin'] != 'true') {%>
           <li class="nviolet"><a href="/logout"><i class="icon-bar-chart"></i> Logout</a></li>
         <% } %>
@@ -105,6 +115,11 @@
 
     socket.on('updateChat', function(message) {
       $('#chat').append($('<li>' + message.time + ' [' + message.name + ']: ' + message.message + '</li>'));
+      $(".error-log").animate({ scrollTop: $('.error-log')[0].scrollHeight}, 100);
+    });
+
+    socket.on('updateConsole', function(message) {
+      $('#console').append($('<li>' + message.time + ': ' + message.log + '</li>'))
       $(".error-log").animate({ scrollTop: $('.error-log')[0].scrollHeight}, 100);
     });
 

@@ -11,6 +11,16 @@
         <td>Players online</td>
         <td><%= server.currentOnline %>/<%= server.maxOnline %></td>
     </tr>
+    <% if (roleCheck('restart') && server.status) { %>
+        <tr>
+            <td>Restart</td>
+            <td>
+                <form method="POST" onsubmit="javascript: return false;" class="form-inline" style="padding:0px; margin:0px;">
+                    <button type="button" class="btn btn-warning" id="restart">Restart</button>
+                </form>
+            </td>
+        </tr>
+    <% } %>
     <% if (roleCheck('connect')) { %>
         <tr>
             <td colspan=2>

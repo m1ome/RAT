@@ -11,18 +11,20 @@ var async = require('async'),
     mysql = require('mysql'),
     server = http.createServer(app),
     io = require('socket.io').listen(server, { log: false }),
-    routes = require('./routes'),
+    // routes = require('./routes'),
     routing = require('./routes/routing'),
     domain = require('domain'),
     path = require('path'),
     partials = require('express-partials'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
+    timeplan = require('timeplan'),
     RCon = require('./libs/rcon.js');
 
 
 // Init models
-var admin = require('./models/Admin.js');
+var admin    = require('./models/Admin.js'),
+    teleport = require('./models/Teleport.js');
 
 async.waterfall([
     function(callback) {
@@ -58,7 +60,7 @@ async.waterfall([
                     applicationConfig['rust.host'], 
                     applicationConfig['rust.port'], 
                     applicationConfig['rust.password'], 
-                    applicationConfig['rust.port']
+                    (applicationConfig['config.debug'] == 'true') ? true : false
                 );
             });
         }catch (err) {
@@ -69,9 +71,6 @@ async.waterfall([
         callback(null, error);
     },
     function(error, callback) {
-
-
-
         app.configure(function(){
             app.set('port', process.env.PORT || 3000);
             app.set('views', path.join(__dirname, 'views'));
@@ -214,6 +213,51 @@ async.waterfall([
             });
         });
 
+        // Restful API for Teleports
+        app.get('/teleports', requireRole('teleports'), function(req, res) {
+            teleport.findAll(function(teleports) {
+                res.render('teleports', {
+                    title: 'Teleports',
+                    description: 'Manage teleport presets',
+                    breadcrumbs: [['/teleports', 'Teleports']],
+                    teleports: teleports
+                });
+            });
+        });
+        app.post('/teleports', requireRole('teleports'), function(req, res) {
+            var name = req.body.name;
+            var location = req.body.location;
+
+            teleport.create(name, location, function(result) {
+                res.redirect('/teleports');
+            });
+        });
+        app.get('/teleports/:id', requireRole('teleports'), function(req, res) {
+            teleport.findOne(req.params.id, function(result) {
+                res.render('teleport_edit', {
+                    title: 'Teleports',
+                    description: 'Edit teleport preset',
+                    breadcrumbs: [['/teleports', 'Teleports'], ['/teleports/' + result.name, result.username]],
+                    teleport: result
+                })
+            });
+        });
+        app.put('/teleports/:id', requireRole('teleports'), function(req, res) {
+            var name = req.body.name;
+            var location = req.body.location;
+            var id       = req.params.id;
+
+            teleport.update(id, name, location, function() {
+                res.redirect('/teleports');
+            });
+        });
+        app.delete('/teleports/:id', requireRole('teleports'), function(req, res) {
+            teleport.del(req.body.id, function(err, result) {
+                if (err) res.send({error: err});
+                else res.send({error: ''});
+            });
+        });
+
         app.get('/login', function(req, res) {
             res.render('login', {
                 layout: false,
@@ -228,6 +272,7 @@ async.waterfall([
         app.get('/connect', requireRole('connect'), routing.connect);
         app.get('/disconnect', requireRole('connect'), routing.disconnect);
         app.get('/status', routing.status);
+        app.get('/restart', routing.restart);
 
         app.post('/chat', requireRole('chat'), routing.chat);
         app.post('/give', requireRole('give'), routing.give);
@@ -239,10 +284,15 @@ async.waterfall([
         app.post('/banid', requireRole('ban'), routing.banid);
         app.post('/topos', requireRole('teleport'), routing.topos);
         app.post('/toplayer', requireRole('teleport'), routing.toplayer);
+        app.post('/topreset', requireRole('teleport'), routing.topreset);
 
         io.sockets.on('connection', function (socket) {
             rconConnection.on("updateChat", function(message){
                 socket.emit("updateChat", message);
+            });
+
+            rconConnection.on("updateConsole", function(message){
+                socket.emit("updateConsole", message);
             });
 
             rconConnection.on("updateOnline", function(online){

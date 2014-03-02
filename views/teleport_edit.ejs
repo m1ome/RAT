@@ -1,0 +1,34 @@
+<div class="widget wgreen">
+    <div class="widget-head">
+        <div class="pull-left">Edit teleport</div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="widget-content">
+        <div class="padd">
+            <form class="form-horizontal" role="form" method="POST">
+                <div class="form-group">
+                    <label class="col-lg-4 control-label">Name</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" placeholder="Username" name="name" value="<%= teleport.name %>" autocomplete="false">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-4 control-label">Location</label>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control" placeholder="Password" name="location" value="<%= teleport.location %>" autocomplete="false">
+                    </div>
+                </div>              
+                
+                <hr>
+                <div class="form-group">
+                    <div class="col-lg-offset-1 col-lg-9">
+                        <input type="hidden" name="_method" value="put">
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>    
+    </div>
+</div>

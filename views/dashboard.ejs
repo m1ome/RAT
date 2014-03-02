@@ -16,41 +16,76 @@
 
 <div class="widget wlightblue">
     <div class="widget-head">
-        <div class="pull-left">Chat Log</div>
+        <div class="pull-left">Logs</div>
         <div class="widget-icons pull-right">
             <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
             <a href="#" class="wclose"><i class="icon-remove"></i></a>
         </div>
         <div class="clearfix"></div>
     </div>
-                
-    <div class="widget-content">
-        <div class="padd">        
-            <div class="error-log">
-                <ul id='chat'>
-                    <% for(var i=0; i<server.chat.length; i++) {%>
-                        <li><%= server.chat[i].time %> [<%= server.chat[i].name %>]: <%= server.chat[i].message %></li>
-                    <% } %>
-                </ul>
+
+    <div class="tabbable">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab1" data-toggle="tab">Chat</a></li>
+            <li><a href="#tab2" data-toggle="tab">Console</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab1">
+                <div class="widget-content">
+                    <div class="padd">        
+                        <div class="error-log">
+                            <ul id='chat'>
+                                <% for(var i=0; i<server.chat.length; i++) {%>
+                                    <li><%= server.chat[i].time %> [<%= server.chat[i].name %>]: <%= server.chat[i].message %></li>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                    <% if (roleCheck('chat')) { %>
+                        <form class="form-horizontal" role="form" method="POST" onsubmit="javascript: return false;">
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Say</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" placeholder="Message" name="message">
+                                </div>
+                                <div class="col-lg-1">
+                                    <select class="form-control" name="popup">
+                                        <option value='0'>Notice</option>
+                                        <option value='1'>Popup</option>
+                                    </select>
+                                </div>
+                                <button type="button" class="btn btn-info" id="send_chat">Say</button>
+                            </div>
+                        </form>       
+                    <% } %> 
+                </div>            
+            </div>
+            <div class="tab-pane" id="tab2">
+                <div class="widget-content">
+                    <div class="padd">        
+                        <div class="error-log">
+                            <ul id='console'>
+                                <% for(var i=0; i<server.console.length; i++) {%>
+                                    <li><%= server.console[i].time %>: <%= server.console[i].log %></li>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                    <% if (roleCheck('execute')) { %>
+                        <form class="form-horizontal" role="form" method="POST" onsubmit="javascript: return false;">
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Execute</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" placeholder="Command" name="command">
+                                </div>
+                                <button type="button" class="btn btn-info" id="send_execute">Execute</button>
+                            </div>
+                        </form>       
+                    <% } %> 
+                </div>              
             </div>
         </div>
-        <% if (roleCheck('chat')) { %>
-            <form class="form-horizontal" role="form" method="POST" onsubmit="javascript: return false;">
-                <div class="form-group">
-                    <label class="col-lg-4 control-label">Say</label>
-                    <div class="col-lg-6">
-                        <input type="text" class="form-control" placeholder="Message" name="message">
-                    </div>
-                    <div class="col-lg-1">
-                        <select class="form-control" name="popup">
-                            <option value='0'>Notice</option>
-                            <option value='1'>Popup</option>
-                        </select>
-                    </div>
-                    <button type="button" class="btn btn-info" id="send_chat">Send</button>
-                </div>
-            </form>       
-        <% } %> 
-    </div>
+    </div> 
 </div>
 
