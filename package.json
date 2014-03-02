@@ -16,8 +16,8 @@
     "express-domain-middleware": "~0.1.0",
     "passport": "~0.2.0",
     "passport-local": "~0.1.6",
-    "simple-acl": "~0.1.2",
     "mysql": "~2.1.0",
-    "async": "~0.2.10"
+    "async": "~0.2.10",
+    "db-migrate": "~0.6.4"
   }
 }
